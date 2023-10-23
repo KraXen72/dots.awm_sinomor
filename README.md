@@ -9,8 +9,8 @@
 - Visualizer: [Cava](https://github.com/karlstav/cava)
 
 ## Screenshots
-![External Image](https://imgur.com/g0fkpfB)
-![Screenshot](https://imgur.com/6GUBpUb)
+![Alt text](https://imgur.com/g0fkpfB)
+![Alt text](https://imgur.com/6GUBpUb)
 
 <details>
 <summary><b>Some Other Stuff</b></summary>
