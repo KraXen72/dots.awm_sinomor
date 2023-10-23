@@ -4,7 +4,7 @@ local wibox = require("wibox")
 local naughty = require("naughty")
 local beautiful = require("beautiful")
 
--- calendar ------------------------
+-- calendar --
 
 local styles = {}
 
@@ -62,7 +62,7 @@ local function decorate_cell(widget, flag, date)
 		widget.align="center"
 	end
 
--- Change bg color for weekends ------------------
+-- Change bg color for weekends --
 
 local d = {year=date.year, month=(date.month or 1), day=(date.day or 1)}
 local weekday = tonumber(os.date("%w", os.time(d)))
@@ -112,7 +112,7 @@ button_next:buttons {
 	awful.button({}, 1, function() change_mounth(1) end)
 }
 
--- main window -----------------------
+-- main window --
 
 local main = wibox.widget {
 	widget = wibox.container.background,

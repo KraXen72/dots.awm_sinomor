@@ -35,11 +35,11 @@ local notifs_empty = wibox.widget {
 	{
 		layout = wibox.layout.flex.vertical,
 		{
-		markup = helpers.ui.colorizeText("No notifications", beautiful.background_urgent),
-		font = beautiful.font,
-		align = "center",
-		valign = "center",
-		widget = wibox.widget.textbox,
+			markup = helpers.ui.colorizeText("No notifications", beautiful.background_urgent),
+			font = beautiful.font,
+			align = "center",
+			valign = "center",
+			widget = wibox.widget.textbox,
 		},
 	},
 }

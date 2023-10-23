@@ -25,6 +25,18 @@ awful.keyboard.append_global_keybindings({
 	awful.key({ mod, ctrl }, "p", function() awful.spawn.with_shell("~/.local/bin/colorpicker", false) end),
 	awful.key({ mod, ctrl }, "q", function() awful.spawn.with_shell("~/.local/bin/qr_codes", false) end),
 
+	-- playerctl --
+
+	awful.key({}, "XF86AudioPlay", function()
+		awful.spawn.with_shell("playerctl play-pause")
+	end),
+	awful.key({}, "XF86AudioPrev", function()
+		awful.spawn.with_shell("playerctl previous")
+	end),
+	awful.key({}, "XF86AudioNext", function()
+		awful.spawn.with_shell("playerctl next")
+	end),
+
 	-- volume up/down/mute --
 
 	awful.key({}, "XF86AudioRaiseVolume", function()
@@ -161,54 +173,56 @@ end)
 -- client binds --
 
 client.connect_signal("request::default_keybindings", function()
-awful.keyboard.append_client_keybindings({
-	awful.key({ mod }, "f",
-		function (c)
-			c.fullscreen = not c.fullscreen
+
+	awful.keyboard.append_client_keybindings({
+		awful.key({ mod }, "f",
+			function (c)
+				c.fullscreen = not c.fullscreen
+				c:raise()
+			end),
+		awful.key({ mod }, "q", function (c) c:kill() end),
+		awful.key({ mod }, "s", awful.client.floating.toggle),
+
+		awful.key({ mod, shift }, "n", function (c)
+				c.minimized = true
+		end),
+
+		awful.key({ mod, shift}, "m", function (c)
+			c.maximized = not c.maximized
 			c:raise()
 		end),
-	awful.key({ mod }, "q", function (c) c:kill() end),
-	awful.key({ mod }, "s", awful.client.floating.toggle),
 
-	awful.key({ mod, shift }, "n", function (c)
-			c.minimized = true
-	end),
+		-- Move or swap by direction --
 
-	awful.key({ mod, shift}, "m", function (c)
-		c.maximized = not c.maximized
-		c:raise()
-	end),
-	-- Move or swap by direction --
+		awful.key({ mod, shift }, "k", function(c)
+			helpers.client.move_client(c, "up")
+		end),
+		awful.key({ mod, shift }, "j", function(c)
+			helpers.client.move_client(c, "down")
+		end),
+		awful.key({ mod, shift }, "h", function(c)
+			helpers.client.move_client(c, "left")
+		end),
+		awful.key({ mod, shift }, "l", function(c)
+			helpers.client.move_client(c, "right")
+		end),
 
-	awful.key({ mod, shift }, "k", function(c)
-		helpers.client.move_client(c, "up")
-	end),
-	awful.key({ mod, shift }, "j", function(c)
-		helpers.client.move_client(c, "down")
-	end),
-	awful.key({ mod, shift }, "h", function(c)
-		helpers.client.move_client(c, "left")
-	end),
-	awful.key({ mod, shift }, "l", function(c)
-		helpers.client.move_client(c, "right")
-	end),
+		--- Relative move  floating client --
 
-	--- Relative move  floating client --
+		awful.key({ mod, shift, ctrl }, "j", function(c)
+			c:relative_move(0, 20, 0, 0)
+		end),
+		awful.key({ mod, shift, ctrl }, "k", function(c)
+			c:relative_move(0, -20, 0, 0)
+		end),
+		awful.key({ mod, shift, ctrl }, "h", function(c)
+			c:relative_move(-20, 0, 0, 0)
+		end),
+		awful.key({ mod, shift, ctrl }, "l", function(c)
+			c:relative_move(20, 0, 0, 0)
+		end),
 
-	awful.key({ mod, shift, ctrl }, "j", function(c)
-		c:relative_move(0, 20, 0, 0)
-	end),
-	awful.key({ mod, shift, ctrl }, "k", function(c)
-		c:relative_move(0, -20, 0, 0)
-	end),
-	awful.key({ mod, shift, ctrl }, "h", function(c)
-		c:relative_move(-20, 0, 0, 0)
-	end),
-	awful.key({ mod, shift, ctrl }, "l", function(c)
-		c:relative_move(20, 0, 0, 0)
-	end),
-
-})
+	})
 
 end)
 

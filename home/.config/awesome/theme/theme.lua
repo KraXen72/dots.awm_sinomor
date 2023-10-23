@@ -10,7 +10,7 @@ theme.useless_gap = 5
 
 theme.wall = ""
 
--- icons ---------------------------------------
+-- icons --
 
 theme.notification_wifi_icon = "~/.config/awesome/theme/icons/wifi.svg"
 theme.battery_icon = "~/.config/awesome/theme/icons/battery.svg"
@@ -19,11 +19,12 @@ theme.notification_icon = "~/.config/awesome/theme/icons/bell.svg"
 theme.notification_icon_error = "~/.config/awesome/theme/icons/alert.svg"
 theme.notification_icon_scrensht = "~/.config/awesome/theme/icons/camera.svg"
 
--- colors -------------------------------------
+-- colors --
 
 theme.background = "#191919"
 theme.background_alt = "#292929"
 theme.background_urgent = "#393939"
+theme.background_urgent1 = "#4c4c4c"
 theme.foreground = "#f0f0f0"
 
 theme.green = "#9ec49f"
@@ -34,12 +35,12 @@ theme.orange = "#ceb188"
 theme.violet = "#c49ec4"
 theme.accent = theme.red
 
--- tray ----------------------------------------
+-- tray --
 
 theme.bg_systray = theme.background_alt
 theme.systray_icon_spacing = 6
 
--- titlebar ------------------------------------
+-- titlebar --
 
 theme.titlebar_bg_normal = theme.background_alt
 theme.titlebar_fg_normal = theme.foreground
@@ -48,59 +49,48 @@ theme.titlebar_fg_focus = theme.foreground
 theme.titlebar_bg_urgent = theme.background_alt
 theme.titlebar_fg_urgent = theme.foreground
 
-theme.titlebar_close_button_normal = "~/.config/awesome/theme/icons/inactive_button.svg"
-theme.titlebar_close_button_focus = "~/.config/awesome/theme/icons/close_button.svg"
-
-theme.titlebar_minimize_button_normal = "~/.config/awesome/theme/icons/inactive_button.svg"
-theme.titlebar_minimize_button_focus = "~/.config/awesome/theme/icons/minimize_button.svg"
-
-theme.titlebar_maximized_button_normal_inactive = "~/.config/awesome/theme/icons/inactive_button.svg"
-theme.titlebar_maximized_button_focus_inactive = "~/.config/awesome/theme/icons/maximize_button.svg"
-theme.titlebar_maximized_button_normal_active = "~/.config/awesome/theme/icons/inactive_button.svg"
-theme.titlebar_maximized_button_focus_active = "~/.config/awesome/theme/icons/maximize_button.svg"
-
--- borders -------------------------------------
+-- borders --
 
 theme.border_width = 2
 theme.border_color_normal = theme.background_urgent
 theme.border_color_active = theme.accent
 
--- default vars --------------------------------
+-- default vars --
 
 theme.bg_normal = theme.background
 theme.fg_normal = theme.foreground
 
--- notification --------------------------------
+-- notification --
 
 theme.notification_spacing = 20 + theme.border_width * 2
 
--- tasklist ------------------------------------
+-- tasklist --
 
 theme.tasklist_bg_normal = theme.background_alt
 theme.tasklist_bg_focus = theme.accent
 theme.tasklist_bg_urgent = theme.foreground
 theme.tasklist_bg_minimize = theme.background_alt
 
--- taglist -------------------------------------
+-- taglist --
 
 theme.taglist_bg_focus = theme.accent
 theme.taglist_fg_focus = theme.background
-theme.taglist_bg_urgent = theme.background_urgent
+theme.taglist_bg_urgent = theme.background_urgent1
 theme.taglist_fg_urgent = theme.foreground
-theme.taglist_bg_occupied = theme.background_alt
+theme.taglist_bg_occupied = theme.background_urgent
 theme.taglist_fg_occupied = theme.foreground
 theme.taglist_bg_empty = theme.background_alt
 theme.taglist_fg_empty = theme.foreground
 theme.taglist_bg_volatile = theme.background_alt
 theme.taglist_fg_volatile = theme.foreground
 
--- bling ----------------------------------------
+-- bling --
 
 theme.playerctl_player = {"%any"}
 theme.playerctl_update_on_activity = true
 theme.playerctl_position_update_interval = 1
 
--- tooltips -------------------------------------
+-- tooltips --
 
 theme.tooltip_bg = theme.background
 theme.tooltip_fg = theme.foreground

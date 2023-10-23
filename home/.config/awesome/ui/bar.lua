@@ -5,10 +5,11 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local vars = require("ui.vars")
 require("scripts.init")
+local rubato = require("modules.rubato")
 
 screen.connect_signal("request::desktop_decoration", function(s)
 
--- profile ----------------------------------
+-- profile --
 
 local profile = wibox.widget {
 	layout = wibox.layout.fixed.vertical,
@@ -45,7 +46,7 @@ profile:buttons {
 	end)
 }
 
--- tasklist ---------------------------------
+-- tasklist --
 
 local tasklist = awful.widget.tasklist {
 	screen = s,
@@ -87,11 +88,13 @@ local tasklist_widget = wibox.widget {
 		tasklist
 }
 
--- keyboard layout --------------------------
+-- keyboard layout --
 
 local mykeyboard=awful.widget.keyboardlayout()
 mykeyboard.widget.text = string.upper(mykeyboard.widget.text)
-mykeyboard.widget:connect_signal("widget::redraw_needed", function(wid) wid.text=string.upper(wid.text) end)
+mykeyboard.widget:connect_signal("widget::redraw_needed",
+	function(wid) wid.text = string.upper(wid.text)
+end)
 
 local keyboard = wibox.widget {
 	widget = wibox.container.background,
@@ -115,7 +118,7 @@ local keyboard = wibox.widget {
 	}
 }
 
--- tray --------------------------------
+-- tray --
 
 local tray = wibox.widget {
 	widget = wibox.container.background,
@@ -165,7 +168,7 @@ tray:buttons{
 	awful.button({}, 1, function() awesome.emit_signal("show::tray") end)
 }
 
--- clock -------------------------------
+-- clock --
 
 local time = wibox.widget {
 	layout = wibox.layout.fixed.vertical,
@@ -207,7 +210,7 @@ time:buttons {
 	end)
 }
 
--- taglist -----------------------------
+-- taglist --
 
 local taglist = awful.widget.taglist {
 	screen = s,
@@ -218,21 +221,35 @@ local taglist = awful.widget.taglist {
 		awful.button({ }, 5, function(t) awful.tag.viewnext(t.screen) end),
 	},
 	layout = {
-		spacing = 6,
+		spacing = 10,
 		layout = wibox.layout.fixed.vertical
 	},
 	widget_template = {
 		id = "background_role",
+		forced_height = 20,
+		forced_width  = 20,
 		widget = wibox.container.background,
-		forced_width = 24,
-		forced_height = 24,
-		{
-			id = "text_role",
-			halign = "center",
-			valign = "center",
-			widget = wibox.widget.textbox
-		}
-	}
+		create_callback = function (self, tag)
+			self.animate = rubato.timed {
+				duration = 0.3,
+				easing = rubato.easing.linear,
+				subscribed = function (h)
+					self:get_children_by_id("background_role")[1].forced_height = h
+				end
+			}
+			self.update = function ()
+				if tag.selected then
+					self.animate.target = 28
+				elseif #tag:clients() > 0 then
+					self.animate.target = 18
+				end
+			end
+			self.update()
+		end,
+		update_callback = function (self)
+			self.update()
+		end,
+	},
 }
 
 local taglist_widget = wibox.widget {
@@ -240,11 +257,11 @@ local taglist_widget = wibox.widget {
 	bg = beautiful.background_alt,
 	{
 		widget = wibox.container.margin,
-		margins = 6,
+		margins = 12,
 		taglist
 	}
 }
--- battery ------------------------------
+-- battery --
 
 local bat = wibox.widget {
 	widget = wibox.container.background,
@@ -294,7 +311,7 @@ awesome.connect_signal("bat::state", function(value)
 	end
 end)
 
--- dnd ------------------------------
+-- dnd --
 
 local dnd_button = wibox.widget {
 	widget = wibox.container.background,
@@ -344,7 +361,7 @@ dnd_button:buttons {
 		awesome.emit_signal("signal::dnd")
 	end),
 }
--- bar --------------------------
+-- bar --
 
 bar = awful.wibar {
 	screen = s,
@@ -361,7 +378,7 @@ bar = awful.wibar {
 	},
 	ontop = false,
 	widget = {
-	layout = wibox.layout.flex.vertical,
+		layout = wibox.layout.flex.vertical,
 		{
 			widget = wibox.container.place,
 			valign = "top",

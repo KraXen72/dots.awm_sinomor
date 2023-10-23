@@ -98,7 +98,7 @@ local function gen(mode)
 	else
 		for entry in list[global_mode] do
 			local open_command = {
-				["clipboard"] = "echo " .. "'"..entry.."'" .. " | xclip -r -sel clipboard",
+				["clipboard"] = "echo " .. "'" .. entry .. "'" .. " | xclip -r -sel clipboard",
 				["books"] = "cd " .. dir .. " && zathura " .. entry,
 			}
 			local appinfo = open_command[mode]

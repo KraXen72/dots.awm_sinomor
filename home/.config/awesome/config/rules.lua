@@ -13,7 +13,6 @@ ruled.client.append_rule {
 	properties = { titlebars_enabled = true }
 }
 
-
 ruled.client.append_rule {
 	id = "global",
 	rule = { },

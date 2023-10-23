@@ -8,10 +8,11 @@ local helpers = require("helpers")
 local vars = require("ui.vars")
 require("scripts.init")
 local weather = require("ui.control.weather")
+local rubato = require("modules.rubato")
 
 screen.connect_signal("request::desktop_decoration", function(s)
 
--- arccharts ------------------------------------
+-- arccharts --
 
 local create_arcchart_widget = function(widget, signal, bg, fg, thickness, text, icon)
 
@@ -65,8 +66,16 @@ local widget = wibox.widget {
 	}
 }
 
+local anim = rubato.timed {
+	duration = 0.3,
+	easing = rubato.easing.linear,
+	subscribed = function(h)
+		widget:get_children_by_id("progressbar")[1].value = h
+	end
+}
+
 awesome.connect_signal(signal, function (value)
-	widget:get_children_by_id("progressbar")[1].value = value
+	anim.target = value
 	widget:get_children_by_id("text")[1].text = value.. "%"
 end)
 
@@ -81,14 +90,14 @@ local resourses = wibox.widget {
 	create_arcchart_widget(disk, "disk::value", beautiful.background_urgent, beautiful.blue, 15, "DISK:", ""),
 }
 
--- progressbars ---------------------------------
+-- progressbars --
 
 local create_progressbar_widget = function(color, width, icon)
 return wibox.widget {
 	widget = wibox.container.background,
 	bg = beautiful.background_alt,
 	forced_height = 20,
-		{
+	{
 		layout = wibox.layout.fixed.horizontal,
 		fill_space = true,
 		spacing = 10,
@@ -121,6 +130,7 @@ return wibox.widget {
 
 end
 
+
 local volume = create_progressbar_widget(beautiful.orange, 370, "")
 
 volume:buttons  {
@@ -138,13 +148,30 @@ volume:buttons  {
 	end),
 }
 
+local anim_volume = rubato.timed {
+	duration = 0.3,
+	easing = rubato.easing.linear,
+	subscribed = function(h)
+		volume:get_children_by_id("progressbar")[1].value = h
+	end
+}
+
+
 awesome.connect_signal("volume::value", function(value, icon)
-	volume:get_children_by_id("progressbar")[1].value = value
+	anim_volume.target = value
 	volume:get_children_by_id("text")[1].text = value
 	volume:get_children_by_id("icon")[1].text = icon
 end)
 
 local bright = create_progressbar_widget(beautiful.violet, 370, "")
+
+local anim_bright = rubato.timed {
+	duration = 0.3,
+	easing = rubato.easing.linear,
+	subscribed = function(h)
+		bright:get_children_by_id("progressbar")[1].value = h
+	end
+}
 
 bright:buttons  {
 	awful.button({}, 4, function()
@@ -158,7 +185,7 @@ bright:buttons  {
 }
 
 awesome.connect_signal("bright::value", function(value, icon)
-	bright:get_children_by_id("progressbar")[1].value = value
+	anim_bright.target = value
 	bright:get_children_by_id("text")[1].text = value
 end)
 
@@ -178,7 +205,7 @@ local info = wibox.widget {
 	}
 }
 
--- profile --------------------------------
+-- profile --
 
 local create_fetch_comp = function(icon, text)
 	return wibox.widget {
@@ -267,7 +294,7 @@ local time = wibox.widget {
 		},
 		{
 			widget = wibox.container.margin,
-			top = 16,
+			top = 15,
 			{
 				layout = wibox.layout.fixed.vertical,
 				spacing = 8,
@@ -284,7 +311,7 @@ local time = wibox.widget {
 	}
 }
 
--- toggles -----------------------------------
+-- toggles --
 
 local create_toggle_widget = function(bg, fg, icon, name, value, arroy_visible)
 	return wibox.widget {
@@ -456,7 +483,7 @@ local toggles = wibox.widget {
 	opacity,
 }
 
--- music player ---------------------------
+-- music player --
 
 local art = wibox.widget {
 	image = "default_image.png",
@@ -526,6 +553,14 @@ local media_slider = wibox.widget({
 	value = 0
 })
 
+local anim_media_slider = rubato.timed {
+	duration = 0.3,
+	easing = rubato.easing.linear,
+	subscribed = function(h)
+		media_slider.value = h
+	end
+}
+
 local previous_value = 0
 local internal_update = false
 
@@ -540,7 +575,7 @@ playerctl:connect_signal(
 	"position", function(_, interval_sec, length_sec)
 		internal_update = true
 		previous_value = interval_sec
-		media_slider.value = interval_sec
+		anim_media_slider.target = interval_sec
 	end
 )
 
@@ -628,11 +663,11 @@ local music = wibox.widget {
 					}
 				}
 			}
-		},
+		}
 	}
 }
 
--- main window -----------------------
+-- main window --
 
 local main = wibox.widget {
 	widget = wibox.container.background,

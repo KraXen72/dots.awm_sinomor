@@ -5,7 +5,7 @@ local beautiful = require("beautiful")
 local naughty = require("naughty")
 local ruled = require("ruled")
 
--- notifications -------------------------------------------------------------
+-- notifications --
 
 naughty.connect_signal("request::display_error", function(message, startup)
 	naughty.notification {
@@ -56,7 +56,7 @@ naughty.connect_signal("request::display", function(n)
 
 naughty.layout.box {
 	notification = n,
-	maximum_width = 900,
+	maximum_width = 800,
 	maximum_height = 120,
 	widget_template = {
 		widget = wibox.container.constraint,

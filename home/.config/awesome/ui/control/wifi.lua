@@ -273,7 +273,6 @@ refresh_button:buttons(gears.table.join(awful.button({}, 1, function()
 	refresh()
 end)))
 
-
 local wifi_popup = awful.popup {
 	visible = false,
 	ontop = true,
@@ -286,7 +285,6 @@ local wifi_popup = awful.popup {
 	end,
 	widget = main,
 }
-
 
 -- summon functions --
 
